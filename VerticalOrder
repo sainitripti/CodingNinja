@@ -1,0 +1,72 @@
+#include<unordered_map>
+#include<vector>
+
+    void printLevel(BinaryTreeNode<int>* root,unordered_map<int,int>&level,int l){
+      if(root==NULL)
+        return;
+      if(level[root->data]==l)
+        cout<<root->data<<" ";
+      printLevel(root->left,level,l);
+      printLevel(root->right,level,l);
+    }
+
+    void inOrder(BinaryTreeNode<int>* root,unordered_map<int,int>&level,vector<int>&traversed,BinaryTreeNode<int>* temp){
+      if(root==NULL)
+        return;
+      int l=level[root->data],ans=0;
+      for(vector<int>::iterator it=traversed.begin();it!=traversed.end();it++){
+        if(*it==l){
+          ans=1;
+          break;
+        }
+      }
+      if(ans==0){
+        printLevel(temp,level,l);
+        cout<<endl;
+        traversed.push_back(l);
+      }
+      inOrder(root->left,level,traversed,temp);
+      inOrder(root->right,level,traversed,temp);
+    }
+  
+    void assignLevel(BinaryTreeNode<int>* root,unordered_map<int,int>&level,int l){
+      if(root==NULL)
+        return;
+      level[root->data]=l;
+      assignLevel(root->left,level,l-1);      
+      assignLevel(root->right,level,l+1);
+      
+    }
+
+	void printBinaryTreeVerticalOrder(BinaryTreeNode<int>* root) {	 
+		
+	// Following is the structure of the Binary Tree node class
+	/*
+		class BinaryTreeNode {
+	    		public :
+    				T data;
+    			BinaryTreeNode<T> *left;
+    			BinaryTreeNode<T> *right;
+
+			BinaryTreeNode(T data) {
+	        		this -> data = data;
+        			left = NULL;
+        			right = NULL;
+    			}
+		};
+	*/
+	
+	/* Don't write main().
+     	* the root of the input binary tree is already passed as function argument.
+     	* Taking input is handled automatically.
+	* Print the binary tree in vertical order. Don't return anything.
+     	*/
+     	unordered_map<int,int>level;
+	assignLevel(root,level,0);
+    vector<int> traversed;
+      BinaryTreeNode<int>* temp=root;
+    inOrder(root,level,traversed,temp);  
+     	
+     	
+ 	}
+
